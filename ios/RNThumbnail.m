@@ -12,7 +12,7 @@
 }
 RCT_EXPORT_MODULE()
 
-RCT_EXPORT_METHOD(get:(NSString *)filepath resolve:(RCTPromiseResolveBlock)resolve
+RCT_EXPORT_METHOD(get:(NSString *)filepath byQuality:(NSNumber*)compressQuality resolve:(RCTPromiseResolveBlock)resolve
                                reject:(RCTPromiseRejectBlock)reject)
 {
     @try {
@@ -32,9 +32,13 @@ RCT_EXPORT_METHOD(get:(NSString *)filepath resolve:(RCTPromiseResolveBlock)resol
         // save to temp directory
         NSString* tempDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory,
                                                                        NSUserDomainMask,
-                                                                       YES) lastObject];
+                                                                      YES) lastObject];
+        //update by sin,add  image compressQuality
+        if(compressQuality == nil){
+            compressQuality = [NSNumber numberWithFloat:1];
+        }
         
-        NSData *data = UIImageJPEGRepresentation(thumbnail, 1.0);
+        NSData *data = UIImageJPEGRepresentation(thumbnail, [compressQuality floatValue]);
         NSFileManager *fileManager = [NSFileManager defaultManager];
         NSString *fullPath = [tempDirectory stringByAppendingPathComponent: [NSString stringWithFormat:@"thumb-%@.jpg", [[NSProcessInfo processInfo] globallyUniqueString]]];
         [fileManager createFileAtPath:fullPath contents:data attributes:nil];
