@@ -62,7 +62,7 @@ public class RNThumbnailModule extends ReactContextBaseJavaModule {
       // 100 means no compression, the lower you go, the stronger the compression
       int qualityCompress = 100;
       if(quality > 0 && quality <= 1 ){
-         qualityCompress = quality * 100;
+         qualityCompress = (int)(quality * 100);
       }
       image.compress(Bitmap.CompressFormat.JPEG, qualityCompress, fOut);
       fOut.flush();
