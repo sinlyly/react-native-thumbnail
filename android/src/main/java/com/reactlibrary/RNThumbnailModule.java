@@ -38,7 +38,7 @@ public class RNThumbnailModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void get(String filePath, Promise promise) {
+  public void get(String filePath,Double quality, Promise promise) {
     filePath = filePath.replace("file://","");
     MediaMetadataRetriever retriever = new MediaMetadataRetriever();
     retriever.setDataSource(filePath);
@@ -58,9 +58,13 @@ public class RNThumbnailModule extends ReactContextBaseJavaModule {
       File file = new File(fullPath, fileName);
       file.createNewFile();
       fOut = new FileOutputStream(file);
-
+      // update by sin ,add qualityCompress
       // 100 means no compression, the lower you go, the stronger the compression
-      image.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+      int qualityCompress = 100;
+      if(quality > 0 && quality <= 1 ){
+         qualityCompress = quality * 100;
+      }
+      image.compress(Bitmap.CompressFormat.JPEG, qualityCompress, fOut);
       fOut.flush();
       fOut.close();
 
