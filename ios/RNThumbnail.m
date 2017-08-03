@@ -12,7 +12,7 @@
 }
 RCT_EXPORT_MODULE()
 
-RCT_EXPORT_METHOD(get:(NSString *)filepath byQuality:(NSNumber*)compressQuality resolve:(RCTPromiseResolveBlock)resolve
+RCT_EXPORT_METHOD(get:(NSString *)filepath byQuality:(NSNumber*_Nonnull)compressQuality resolve:(RCTPromiseResolveBlock)resolve
                                reject:(RCTPromiseRejectBlock)reject)
 {
     @try {
